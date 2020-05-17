@@ -41,10 +41,10 @@ except FileNotFoundError:
 
 gc = gspread.authorize(credentials)
 
-worksheet = gc.open('Analisis de Calidad de Componentes Web (respuestas)').worksheet('Cuestionarios Delphi - Template')
+worksheet = gc.open('Analisis de Calidad de Componentes Web (respuestas)').worksheet('Results Round #1')
 
 # get_all_values gives a list of rows.
-answers= np.array(worksheet.get('C2:AU50'),int)
+answers= np.array(worksheet.get('D2:AV10'),int)
 metrics = np.transpose(answers)
 
 # Statistics
@@ -54,6 +54,15 @@ answers_std = np.std(answers,axis=0)
 
 answers_agree = np.apply_along_axis(evaluateAgreement,0,answers)
 answers_disagree = np.apply_along_axis(evaluateDisagreement,0,answers)
+
+## Saving Data for R Scripts
+np.save("answers.npy",answers)
+np.save("metrics.npy",metrics)
+np.save("answers_mean.npy",answers_mean)
+np.save("answers_median.npy",answers_median)
+np.save("answers_std.npy",answers_std)
+np.save("answers_agree.npy",answers_agree)
+np.save("answers_disagree.npy",answers_disagree)
 
 # Simple Component Analysis
 pca = PCA(n_components=2)
