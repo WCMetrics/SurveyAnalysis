@@ -44,7 +44,7 @@ gc = gspread.authorize(credentials)
 worksheet = gc.open('Analisis de Calidad de Componentes Web (respuestas)').worksheet('Results Round #1')
 
 # get_all_values gives a list of rows.
-answers= np.array(worksheet.get('D2:AV10'),int)
+answers= np.array(worksheet.get('D2:AV13'),int)
 metrics = np.transpose(answers)
 
 # Statistics
