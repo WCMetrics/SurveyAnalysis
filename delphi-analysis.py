@@ -44,7 +44,7 @@ gc = gspread.authorize(credentials)
 worksheet = gc.open('Analisis de Calidad de Componentes Web (respuestas)').worksheet('Results Round #1')
 
 # get_all_values gives a list of rows.
-answers= np.array(worksheet.get('D2:AV13'),int)
+answers= np.array(worksheet.get('D2:AV19'),int)
 metrics = np.transpose(answers)
 
 # Statistics
@@ -65,7 +65,7 @@ np.save("answers_agree.npy",answers_agree)
 np.save("answers_disagree.npy",answers_disagree)
 
 # Simple Component Analysis
-pca = PCA(n_components=2)
+pca = PCA(n_components=3)
 ca_data= pca.fit_transform(answers)
 
 # Visualization
@@ -78,6 +78,7 @@ for point in ca_data.tolist():
 
 plt.legend(loc='best', shadow=False, scatterpoints=1)
 plt.title('Survey PCA')
+plt.show()
 
 baseline=0
 size_plots, ax1 = plt.subplots()
